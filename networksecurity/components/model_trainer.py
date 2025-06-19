@@ -1,9 +1,3 @@
-import os
-import sys
-import numpy as np
-import pandas as pd
-import mlflow
-
 from networksecurity.entity.config_entity import ModelTrainerConfig
 from networksecurity.entity.artifact_entity import DataTransformationArtifact, ModelTrainerArtifact
 from networksecurity.exception.exception import NetworkSecurityException
@@ -23,6 +17,13 @@ from sklearn.ensemble import (
     GradientBoostingClassifier,
     RandomForestClassifier,
 )
+import os
+import sys
+import numpy as np
+import pandas as pd
+import mlflow
+import dagshub
+dagshub.init(repo_owner='Zenith369', repo_name='networksecurity', mlflow=True)
 
 
 class ModelTrainer:
@@ -103,6 +104,8 @@ class ModelTrainer:
 
         Network_Model = NetworkModel(preprocessor=preprocessor, model=best_model)
         save_object(self.model_trainer_config.trained_model_file_path, obj=Network_Model)
+
+        save_object(file_path='final_models/model.pkl', obj=best_model)
 
         # Model Trainer Artifact
         model_trainer_artifact = ModelTrainerArtifact(trained_model_file_path=self.model_trainer_config.trained_model_file_path,
