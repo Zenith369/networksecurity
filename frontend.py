@@ -17,7 +17,7 @@ st.set_page_config(
 with st.sidebar:
     st.image("assets/Logo/Bastion.png", width=150)
     st.title("🛡️ Network Security App")
-    st.info("This application uses cutting edge machine learning models on various parameters of a website to detect for phishing behaviour.")
+    st.info("This application selects the best machine learning model trained on various parameters related to a website to detect for phishing behaviour.")
     
     page = st.radio(
         "Choose a page:",
@@ -65,9 +65,9 @@ if page == "Train Model":
                 st.info(f"Please ensure the FastAPI server is running at `{BACKEND_URL}`.")
 
 elif page == "Predict Intrusions":
-    st.title("🔍 Predict Network Intrusions")
+    st.title("🔍 Predict Network Security")
     st.markdown("---")
-    st.info("Upload a CSV file with network traffic data to predict whether each connection is an attack or normal.", icon="📄")
+    st.info("Upload a CSV file with website data to predict whether each connection is a phishing attack or not.", icon="📄")
     
     st.write("#### 📄 Required CSV Format")
     st.info(
@@ -113,7 +113,7 @@ elif page == "Predict Intrusions":
 
                         if response.status_code == 200:
                             st.success("✅ Prediction successful!")
-                            st.markdown("### Prediction Results:")
+                            st.markdown("<h3 style='color: #fafafa;'>Prediction Results:</h3>", unsafe_allow_html=True)
                             
                             table_styler_css = """
                             <style>
