@@ -1,6 +1,6 @@
 Network Security System for Phishing URL Detection
 
-This project is a full-stack web application designed to detect malicious phishing URLs using a   machine learning model selected. The backend is built with FastAPI, the frontend with Streamlit, and the entire application is containerized with Docker for seamless deployment to AWS EC2 using a CI/CD pipeline with GitHub Actions.
+This project is a full-stack web application designed to detect malicious phishing URLs using a   machine learning model. Dagshub and mlflow are being to track all the experiments. The backend is built with FastAPI, the frontend with Streamlit, and the entire application is containerized with Docker for seamless deployment to AWS EC2 using a CI/CD pipeline with GitHub Actions.
 
 ✨ Features
 
