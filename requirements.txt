@@ -11,5 +11,8 @@ dagshub
 fastapi
 uvicorn
 python-multipart
+streamlit
+gunicorn
+supervisor
 
 # -e .

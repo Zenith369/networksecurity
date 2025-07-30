@@ -3,6 +3,8 @@ import sys
 import pandas as pd
 import numpy as np
 
+'''URL for streamlit frontend'''
+BACKEND_URL = "http://127.0.0.1:8000"
 
 '''
 Defining constants for the training pipeline
