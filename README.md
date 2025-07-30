@@ -6,7 +6,7 @@ This project is a full-stack web application designed to detect malicious phishi
 
 *   **ML-Powered Predictions**: Leverages a pre-trained model to classify URLs as safe or malicious.
 *   **Interactive UI**: A clean and user-friendly Streamlit frontend for uploading data and viewing predictions.
-*   **Model Training**: An API endpoint to trigger a retraining pipeline on for the latest version of the machine learning model.
+*   **Model Training**: An API endpoint to trigger a retraining pipeline for the latest version of the machine learning model.
 *   **Automated Deployment**: A full CI/CD pipeline using GitHub Actions to automatically build and deploy the application to AWS.
 *   **Scalable Architecture**: Containerized with Docker and managed with Supervisor to run both the frontend and backend services in a single container.
 
