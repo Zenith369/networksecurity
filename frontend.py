@@ -65,16 +65,16 @@ if page == "Train Model":
                 st.info(f"Please ensure the FastAPI server is running at `{BACKEND_URL}`.")
 
 elif page == "Predict Intrusions":
-    st.title("🔍 Predict Network Security")
+    st.title("🔍 Predict Network Intrusions")
     st.markdown("---")
-    st.info("Upload a CSV file with website data to predict whether each connection is a phishing attack or not.", icon="📄")
+    st.info("Upload a CSV file with one or more rows of data to predict if the URLs are malicious.", icon="📄")
     
+    # --- Example Data Format Section ---
     st.write("#### 📄 Required CSV Format")
     st.info(
         "Your uploaded CSV file must contain the following columns. The values typically represent categories: "
         "`1` (feature is present), `0` (neutral), `-1` (feature is not present)."
     )
-
     example_data = {
         "having_IP_Address": 1, "URL_Length": -1, "Shortining_Service": 1, "having_At_Symbol": 1,
         "double_slash_redirecting": 1, "Prefix_Suffix": -1, "having_Sub_Domain": 1, "SSLfinal_State": 1,
@@ -84,9 +84,7 @@ elif page == "Predict Intrusions":
         "age_of_domain": 1, "DNSRecord": 1, "web_traffic": -1, "Page_Rank": -1, "Google_Index": 1,
         "Links_pointing_to_page": 1, "Statistical_report": 1
     }
-
     example_df = pd.DataFrame([example_data])
-
     st.dataframe(example_df)
     st.markdown("---")
 
@@ -103,6 +101,8 @@ elif page == "Predict Intrusions":
             df_preview = pd.read_csv(uploaded_file)
             st.dataframe(df_preview.head())
             
+            num_rows = len(df_preview)
+
             uploaded_file.seek(0) 
 
             if st.button("Run Prediction", type="primary", use_container_width=True):
@@ -113,31 +113,51 @@ elif page == "Predict Intrusions":
 
                         if response.status_code == 200:
                             st.success("✅ Prediction successful!")
-                            st.markdown("<h3 style='color: #fafafa;'>Prediction Results:</h3>", unsafe_allow_html=True)
                             
-                            table_styler_css = """
-                            <style>
-                                .table {
-                                    width: 100%; border-collapse: collapse; color: #e1e1e1; background-color: #0e1117;
-                                }
-                                .table th, .table td {
-                                    border: 1px solid #3a3a3a; text-align: left; padding: 12px;
-                                }
-                                .table thead th {
-                                    background-color: #262730; color: #fafafa; font-weight: bold;
-                                }
-                                .table-striped tbody tr:nth-of-type(odd) {
-                                    background-color: #1a1c24;
-                                }
-                                 .table-striped tbody tr:nth-of-type(even) {
-                                    background-color: #0e1117;
-                                }
-                            </style>
-                            """
-                            
-                            backend_html = response.text
-                            styled_html = table_styler_css + backend_html
-                            st.components.v1.html(styled_html, height=600, scrolling=True)
+                            if num_rows == 1:
+                                try:
+                                    result_df_list = pd.read_html(response.text)
+                                    if result_df_list:
+                                        result_df = result_df_list[0]
+                                        prediction_value = result_df['predicted_column'].iloc[0]
+
+                                        if prediction_value == 1:
+                                            st.error("🚨 This URL is predicted to be MALICIOUS.", icon="🚨")
+                                        else:
+                                            st.success("✅ This URL is predicted to be SAFE.", icon="✅")
+                                    else:
+                                        st.warning("Could not find a table in the response from the server.")
+
+                                except Exception as e:
+                                    st.error(f"Failed to parse the prediction result: {e}")
+
+                            else:
+                                # If more than one row, display the full styled table as before.
+                                st.markdown("<h3 style='color: #fafafa;'>Prediction Results:</h3>", unsafe_allow_html=True)
+                                
+                                table_styler_css = """
+                                <style>
+                                    .table {
+                                        width: 100%; border-collapse: collapse; color: #e1e1e1; background-color: #0e1117;
+                                    }
+                                    .table th, .table td {
+                                        border: 1px solid #3a3a3a; text-align: left; padding: 12px;
+                                    }
+                                    .table thead th {
+                                        background-color: #262730; color: #fafafa; font-weight: bold;
+                                    }
+                                    .table-striped tbody tr:nth-of-type(odd) {
+                                        background-color: #1a1c24;
+                                    }
+                                    .table-striped tbody tr:nth-of-type(even) {
+                                        background-color: #0e1117;
+                                    }
+                                </style>
+                                """
+                                
+                                backend_html = response.text
+                                styled_html = table_styler_css + backend_html
+                                st.components.v1.html(styled_html, height=600, scrolling=True)
                             
                         else:
                             st.error("❌ An error occurred during prediction.")
