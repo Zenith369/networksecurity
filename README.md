@@ -143,3 +143,33 @@ You are all set! Simply **push a change** to the `main` branch of your forked re
 ```bash
 git commit -m "Triggering deployment" --allow-empty
 git push origin main
+```
+This will trigger the GitHub Actions workflow. You can watch its progress in the "Actions" tab of your repository. The workflow will build the Docker image, push it to ECR, and then the self-hosted runner on your EC2 instance will pull the new image and run it.
+
+## 🖥️ Local Development (Optional)
+
+To run the application on your local machine for development:
+
+1.  **Clone the repository** (if you haven't already).
+2.  **Create a `.env` file** in the root directory and add your MongoDB URL:
+    ```
+    MONGO_DB_URL="your_mongodb_connection_string"
+    ```
+3.  **Set up a virtual environment**:
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    ```
+4.  **Install dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+5.  **Run the applications**: Open two separate terminals.
+    *   **Terminal 1 (Backend)**:
+        ```bash
+        uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+        ```
+    *   **Terminal 2 (Frontend)**:
+        ```bash
+        streamlit run frontend.py
+        ```
