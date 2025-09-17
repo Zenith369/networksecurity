@@ -1,6 +1,0 @@
-[2025-07-30 19:59:09,525] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/user "HTTP/1.1 200 OK"
-[2025-07-30 19:59:09,532] 107 dagshub - INFO - Accessing as Zenith369
-[2025-07-30 19:59:10,328] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/repos/Zenith369/networksecurity "HTTP/1.1 200 OK"
-[2025-07-30 19:59:11,089] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/user "HTTP/1.1 200 OK"
-[2025-07-30 19:59:11,092] 107 dagshub - INFO - Initialized MLflow to track repo "Zenith369/networksecurity"
-[2025-07-30 19:59:11,093] 107 dagshub - INFO - Repository Zenith369/networksecurity initialized!
