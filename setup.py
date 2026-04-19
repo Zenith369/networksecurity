@@ -27,7 +27,7 @@ setup(
     name='Network Security System',
     version='0.0.1',
     author='Zenith369',
-    author_email='prasham.work@gmail.com',
+    author_email='',
     packages=find_packages(),
     install_requires=get_requirements(),
 )
